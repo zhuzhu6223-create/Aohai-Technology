@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>遨海市场部术语库</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f5f5;color:#1a1a1a;min-height:100vh;padding:1.5rem 1rem}
+.app{max-width:720px;margin:0 auto;background:#fff;border-radius:16px;padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:8px}
+.title{font-size:20px;font-weight:600;color:#1a1a1a}
+.subtitle{font-size:12px;color:#888;margin-top:2px}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{font-size:12px;padding:4px 10px;border-radius:8px;border:1px solid #e5e5e5;color:#666;background:#fafafa}
+.stat span{font-weight:600;color:#1a1a1a}
+.reset-btn{font-size:12px;color:#aaa;cursor:pointer;border:1px solid #e5e5e5;border-radius:8px;padding:4px 10px;background:#fafafa}
+.reset-btn:hover{color:#666}
+.tabs{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tab{padding:7px 16px;font-size:13px;border-radius:8px;border:1px solid #e5e5e5;cursor:pointer;background:#fff;color:#666;transition:all .15s;font-weight:500}
+.tab.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.cat-filter{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap}
+.cat-btn{padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid #e5e5e5;cursor:pointer;background:#fff;color:#666;transition:all .15s}
+.cat-btn.active{background:#e8f0fe;color:#1a56db;border-color:#93b4f8;font-weight:500}
+.progress-bar{height:4px;background:#f0f0f0;border-radius:2px;margin-bottom:1.5rem;overflow:hidden}
+.progress-fill{height:100%;background:#1a56db;border-radius:2px;transition:width .4s}
+/* Card */
+.card-wrap{perspective:1000px;margin-bottom:1.25rem}
+.card{width:100%;height:240px;position:relative;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,0,.2,1);cursor:pointer}
+.card.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;height:240px;backface-visibility:hidden;border-radius:14px;border:1px solid #e8e8e8;padding:2rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow-y:auto}
+.card-front{background:#fff}
+.card-back{transform:rotateY(180deg);background:#f7f9ff;border-color:#c7d8f8}
+.card-category{font-size:11px;color:#aaa;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.card-term{font-size:32px;font-weight:700;color:#1a1a1a;margin-bottom:6px;line-height:1.2}
+.card-full{font-size:13px;color:#888;margin-bottom:4px}
+.card-flip-hint{font-size:11px;color:#ccc;margin-top:1.5rem}
+.card-def{font-size:15px;color:#222;line-height:1.75;max-width:520px}
+.card-example{font-size:12px;color:#777;margin-top:14px;font-style:italic;max-width:520px;line-height:1.6;padding:10px 14px;background:#fff;border-radius:8px;border-left:3px solid #c7d8f8;text-align:left}
+.mastery-btns{display:flex;gap:10px;justify-content:center;margin-bottom:1.25rem}
+.m-btn{padding:9px 24px;font-size:13px;border-radius:8px;border:1px solid;cursor:pointer;font-weight:600;transition:all .15s}
+.m-again{background:#fff5f5;color:#c0392b;border-color:#f5c6c6}
+.m-again:hover{background:#ffe0e0}
+.m-know{background:#f0faf0;color:#1e7e34;border-color:#a8d8a8}
+.m-know:hover{background:#d4edda}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.nav-btn{padding:8px 20px;font-size:13px;border-radius:8px;border:1px solid #e5e5e5;cursor:pointer;background:#fff;color:#333;font-weight:500;transition:all .15s}
+.nav-btn:hover:not(:disabled){background:#f5f5f5}
+.nav-btn:disabled{opacity:.3;cursor:default}
+.nav-info{font-size:13px;color:#999}
+/* Quiz */
+.quiz-q{font-size:15px;font-weight:500;color:#1a1a1a;margin-bottom:1rem;padding:1.25rem;background:#f7f9ff;border-radius:10px;line-height:1.7;border-left:3px solid #93b4f8}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{padding:11px 16px;font-size:14px;border-radius:8px;border:1px solid #e5e5e5;cursor:pointer;background:#fff;color:#1a1a1a;text-align:left;transition:all .15s;font-family:inherit}
+.quiz-opt:hover:not(:disabled){background:#f5f7ff;border-color:#93b4f8}
+.quiz-opt.correct{background:#f0faf0;color:#1e7e34;border-color:#a8d8a8;font-weight:600}
+.quiz-opt.wrong{background:#fff5f5;color:#c0392b;border-color:#f5c6c6}
+.quiz-meta{margin-top:10px;font-size:12px;color:#aaa}
+.quiz-next{margin-top:1rem;padding:9px 22px;font-size:13px;border-radius:8px;border:1px solid #e5e5e5;cursor:pointer;background:#fff;color:#333;font-weight:500}
+.quiz-next:hover{background:#f5f5f5}
+.quiz-score{text-align:center;padding:2.5rem 1rem;background:#f7f9ff;border-radius:14px;border:1px solid #c7d8f8}
+.quiz-score-num{font-size:56px;font-weight:700;color:#1a56db}
+.quiz-score-label{font-size:14px;color:#666;margin-top:6px}
+.quiz-score-sub{font-size:13px;color:#aaa;margin-top:4px}
+/* List */
+.list-search{width:100%;padding:9px 14px;font-size:14px;border-radius:8px;border:1px solid #e5e5e5;margin-bottom:1rem;font-family:inherit;outline:none;transition:border .15s}
+.list-search:focus{border-color:#93b4f8}
+.list-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px}
+.list-item{padding:12px 14px;border-radius:10px;border:1px solid #e8e8e8;background:#fff;cursor:pointer;transition:all .15s}
+.list-item:hover{border-color:#93b4f8;background:#f7f9ff}
+.list-item.mastered{border-left:3px solid #1e7e34}
+.list-term{font-size:14px;font-weight:600;color:#1a1a1a}
+.list-full{font-size:11px;color:#aaa;font-weight:400}
+.list-def{font-size:12px;color:#666;margin-top:5px;line-height:1.55}
+.list-cat{font-size:10px;color:#aaa;margin-top:5px;letter-spacing:.03em}
+.list-badge{font-size:10px;color:#1e7e34;background:#f0faf0;padding:2px 7px;border-radius:4px;border:1px solid #a8d8a8}
+.empty{text-align:center;padding:3rem;color:#bbb;font-size:14px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div>
+      <div class="title">遨海市场部术语库</div>
+      <div class="subtitle">AIS / VDES · GTM · 市场运营</div>
+    </div>
+    <div class="stats">
+      <div class="stat">共 <span id="total-count">0</span> 词</div>
+      <div class="stat">已掌握 <span id="mastered-count">0</span></div>
+      <button class="reset-btn" onclick="resetProgress()">重置进度</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="setTab('card')">卡片翻转</button>
+    <button class="tab" onclick="setTab('quiz')">选择题测验</button>
+    <button class="tab" onclick="setTab('list')">词条总览</button>
+  </div>
+
+  <div class="cat-filter" id="cat-filter"></div>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+
+  <!-- Card Mode -->
+  <div id="card-mode">
+    <div class="card-wrap">
+      <div class="card" id="main-card" onclick="flipCard()">
+        <div class="card-face card-front">
+          <div class="card-category" id="c-cat"></div>
+          <div class="card-term" id="c-term"></div>
+          <div class="card-full" id="c-full"></div>
+          <div class="card-flip-hint">点击查看释义</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-category" id="cb-cat"></div>
+          <div class="card-def" id="c-def"></div>
+          <div class="card-example" id="c-ex"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mastery-btns">
+      <button class="m-btn m-again" onclick="markCard(false)">还不熟</button>
+      <button class="m-btn m-know" onclick="markCard(true)">已掌握 ✓</button>
+    </div>
+    <div class="nav">
+      <button class="nav-btn" id="prev-btn" onclick="prevCard()">← 上一个</button>
+      <span class="nav-info" id="nav-info"></span>
+      <button class="nav-btn" id="next-btn" onclick="nextCard()">下一个 →</button>
+    </div>
+  </div>
+
+  <!-- Quiz Mode -->
+  <div id="quiz-mode" style="display:none">
+    <div id="quiz-content"></div>
+  </div>
+
+  <!-- List Mode -->
+  <div id="list-mode" style="display:none">
+    <input class="list-search" id="list-search" type="text" placeholder="搜索术语或关键词…" oninput="renderList()">
+    <div class="list-wrap" id="list-wrap"></div>
+  </div>
+</div>
+
+<script>
+const TERMS = [
+  {term:"GTM",full:"Go-to-Market",cat:"战略方法",def:"上市策略，指将产品或服务推向目标市场的完整打法，涵盖战场选择、价值主张、客户推进和经营复盘四大环节。",example:"遨海市场部定位为GTM增长中台，核心职责是将AIS/VDES能力转化为可销售方案。"},
+  {term:"GTM增长中台",full:"",cat:"组织定位",def:"超越传统宣传部门的市场组织形态，主动定义行业机会，将政策、产品与客户场景转化为可推进商机，支撑业务增长。",example:"市场部从【项目支持型】升级为【GTM增长中台】，形成战场选择—方案包装—客户推进—复盘沉淀闭环。"},
+  {term:"Where to Play",full:"战场选择",cat:"GTM四问",def:"GTM战略四问之一：优先进入哪些行业、区域和客户群体，即战场选择与聚焦。",example:"遨海的Where to Play包括海事、航保、港口、海洋、内河、渔业和海上文旅。"},
+  {term:"How to Win",full:"打法设计",cat:"GTM四问",def:"GTM战略四问之一：通过什么价值主张和差异化优势赢得客户，即打法与定位设计。",example:"遨海的How to Win是AIS/VDES设备+船岸通信+数智平台的组合价值主张。"},
+  {term:"Execution",full:"战役执行",cat:"GTM四问",def:"GTM战略四问之一：通过样板客户打造、销售赋能、客户拜访推动方案落地与商机转化。",example:"锁定样板客户、完成6套方案包和12份一页纸是Execution阶段的核心交付。"},
+  {term:"War Room",full:"经营复盘",cat:"GTM四问",def:"GTM战略四问之一：通过看板、指标和内部挑战进行经营复盘的机制，类似作战室，用事实驱动决策。",example:"War Room聚焦重点商机，用事实、指标、假设和内部挑战驱动周期性复盘。"},
+  {term:"DSTE",full:"Develop Strategy To Execute",cat:"战略方法",def:"华为战略规划方法论：从战略制定到执行落地的完整框架，含战略意图、战略规划、年度经营计划和执行四个阶段。",example:"DSTE与BLM配合使用，前者聚焦战略执行节奏，后者聚焦战略分析框架。"},
+  {term:"BLM",full:"Business Leadership Model",cat:"战略方法",def:"华为业务领导力模型，通过市场洞察、战略意图、创新焦点、业务设计等模块系统分析业务战略。",example:"遨海市场部可借鉴BLM进行年度战略分析，从市场洞察推导业务设计和资源配置。"},
+  {term:"MM",full:"Market Management",cat:"战略方法",def:"市场管理流程，源自华为，包含理解市场、细分市场、组合分析、制定策略、管理计划、使能销售六步骤。",example:"MM方法帮助市场部系统拆解客户群体，确定优先级和资源投入比例。"},
+  {term:"e-Navigation",full:"电子航海",cat:"行业术语",def:"国际海事组织（IMO）推动的电子航海系统化倡议，旨在整合船舶和岸基电子信息，提升海上安全与效率。",example:"e-Navigation是VDES技术推广的重要政策背景，为遨海创造市场窗口。"},
+  {term:"VDES",full:"VHF Data Exchange System",cat:"核心产品",def:"甚高频数据交换系统，是AIS的升级技术，支持更大带宽的双向数据通信，是国际海事通信的下一代标准。",example:"AT-V10是遨海的VDES终端产品，面向船载和岸基部署。"},
+  {term:"AIS",full:"Automatic Identification System",cat:"核心产品",def:"船舶自动识别系统，通过VHF无线电播发船舶位置、航速、航向等信息，是全球海事安全的核心基础设施。",example:"AT-B20是遨海的AIS基站产品，AT-B20A为升级版本。"},
+  {term:"VTS",full:"Vessel Traffic Service",cat:"行业术语",def:"船舶交通服务，港口和海峡的船舶监控与引导系统，类似海上的空中交通管制，提升通航安全效率。",example:"海事VTS/VDES与海上搜救是遨海2026年六大重点方案之一。"},
+  {term:"MOB",full:"Man Overboard",cat:"行业术语",def:"人员落水告警，指船员意外落水时触发的紧急搜救信号和处置流程。",example:"遨海的海上应急方案包含MOB告警联动和处置留痕功能。"},
+  {term:"DSC",full:"Digital Selective Calling",cat:"行业术语",def:"数字选择性呼叫，GMDSS海上遇险安全通信系统的核心组件，用于发送船舶遇险位置信息。",example:"DSC与VDES结合可构建更完整的海上应急通信闭环。"},
+  {term:"GMDSS",full:"Global Maritime Distress and Safety System",cat:"行业术语",def:"全球海上遇险和安全系统，是国际强制性海上遇险通信体系，整合了DSC、EPIRB、卫星通信等子系统。",example:"VDES是GMDSS未来演进的重要方向，提升海上遇险通信带宽与可靠性。"},
+  {term:"客户成功",full:"Customer Success",cat:"客户管理",def:"确保客户在使用产品后真正实现业务价值的职能，贯穿上手启用、价值实现、续费增购全生命周期，不同于传统客服。",example:"白灵负责遨海的客户成功工作，核心目标是提升客户旅程满意度和续费率。"},
+  {term:"客户旅程",full:"Customer Journey",cat:"客户管理",def:"客户从接触产品到持续使用的完整体验路径，包含认知、评估、购买、上手、使用、续费各阶段。",example:"客户成功经理需持续监控和优化客户旅程，及时发现价值实现风险点。"},
+  {term:"一页纸",full:"One-Pager",cat:"市场资产",def:"针对特定客户场景或产品方案浓缩的单页说明文件，用于客户拜访、投标支撑和销售赋能，强调简洁可传播。",example:"遨海计划为重点客户场景制作12份客户一页纸，可在拜访和演示中复用。"},
+  {term:"SLA",full:"Service Level Agreement",cat:"客户管理",def:"服务级别协议，明确服务提供方对响应时间、可用率、故障处理等指标的承诺和边界，防止过度承诺风险。",example:"卞明昌负责对所有方案进行SLA边界审核，确保技术承诺在可交付范围内。"},
+  {term:"销售赋能",full:"Sales Enablement",cat:"市场功能",def:"为销售团队提供工具、内容和培训以提升成交效率的系统性支撑，包括方案包、话术、竞品分析等。",example:"市场部通过6套行业方案包和12份客户一页纸实现对销售的赋能支撑。"},
+  {term:"竞品情报",full:"Competitive Intelligence",cat:"市场功能",def:"系统性收集、分析竞争对手产品、定价、策略和市场动作的信息，用于制定差异化策略和销售应对话术。",example:"市场部知识资产中包含竞品库，持续更新竞品情报以支撑GTM决策。"},
+  {term:"领先指标",full:"Leading Indicator",cat:"经营管理",def:"能预测未来结果的过程性指标，与滞后指标（结果指标）相对，如简报数量、方案复用率等，反映工作质量。",example:"遨海KPI体系采用【领先指标+结果指标】双轨，政策简报数量是典型领先指标。"},
+  {term:"经营看板",full:"Business Dashboard",cat:"经营管理",def:"汇聚关键业务指标的可视化管理工具，实时监控商机进展、市场资产沉淀和团队协同状态。",example:"市场部将建立经营看板，追踪线索、商机、方案复用和内容传播数据。"},
+  {term:"电子围栏",full:"Geo-fence",cat:"平台功能",def:"在电子地图上划定虚拟地理边界，当监控目标进入或离开该区域时自动触发预警的技术功能。",example:"遨海游艇监管方案中包含电子围栏，用于海上禁行区域和活动范围管控。"},
+  {term:"态势感知",full:"Situational Awareness",cat:"平台功能",def:"对海域内船舶、人员、设备实时状态的综合感知与可视化呈现，支撑指挥调度和应急处置决策。",example:"遨海调度看板提供实时态势感知，将AIS/VDES数据融合为统一作战图。"},
+  {term:"国产化/自主可控",full:"",cat:"品牌表达",def:"信息系统核心软硬件采用国内自主研发产品，不依赖境外技术，是海事和政府客户采购的重要评估维度。",example:"遨海在品牌传播中强调国产化、自主可控定位，契合海事安全保障政策导向。"},
+  {term:"数智底座",full:"",cat:"平台功能",def:"支撑数字化与智能化业务的基础技术平台，集成数据接入、存储、计算、分析和AI能力的统一底层架构。",example:"遨海的数智底座是行业方案落地的技术基础，可在海事、港口、渔业等场景复用。"},
+  {term:"方案包",full:"Solution Package",cat:"市场资产",def:"针对特定行业场景标准化封装的完整解决方案，包含行业背景、建设目标、系统架构、产品配置和客户价值七个模块。",example:"遨海计划在2026年完成海事、港口、海工、文旅、渔业、内河六套行业方案包。"},
+  {term:"AI工作流",full:"AI Workflow",cat:"数字化工具",def:"将AI能力嵌入具体业务流程的工作模式，包括政策研究、方案生成、内容生产和知识沉淀等环节的AI辅助。",example:"遨海AI工作流底座分为研究材料、知识办公、内容传播三层，提升全流程交付效率。"},
+  {term:"知识资产",full:"Knowledge Assets",cat:"市场功能",def:"市场部沉淀的可复用知识财富，包括政策库、产品库、客户库、竞品库、案例库和方案库。",example:"知识资产是市场部从【项目型】升级为【系统型】组织的核心标志。"},
+  {term:"线索/商机",full:"Lead / Opportunity",cat:"经营管理",def:"线索是初步识别的潜在客户需求；商机是经过验证、有明确推进计划的销售机会，是市场部贡献业务增长的核心产出。",example:"薛鹏的年度KPI包括有效线索20条以上，重点商机5个以上复盘。"},
+  {term:"政策转化",full:"Policy Conversion",cat:"市场功能",def:"将国家或地方政策文件中的建设要求转化为可推进的客户需求和产品方案的核心市场能力。",example:"大连水上旅游一站式监管平台是遨海市场部政策转化能力的样板案例。"},
+];
+
+let currentCat="全部", currentIdx=0, flipped=false, mode="card", mastered={}, quizState=null;
+try{mastered=JSON.parse(localStorage.getItem("aohai_mkt_mastered")||"{}");}catch(e){}
+function saveMastered(){try{localStorage.setItem("aohai_mkt_mastered",JSON.stringify(mastered));}catch(e){}}
+function getFiltered(){return TERMS.filter(t=>currentCat==="全部"||t.cat===currentCat);}
+const CATS=[...new Set(TERMS.map(t=>t.cat))];
+
+function initCatFilter(){
+  document.getElementById("cat-filter").innerHTML=["全部",...CATS].map(c=>`<button class="cat-btn${c===currentCat?" active":""}" onclick="setCat('${c}')">${c}</button>`).join("");
+}
+function setCat(cat){currentCat=cat;currentIdx=0;flipped=false;initCatFilter();render();}
+function setTab(t){
+  mode=t;
+  document.querySelectorAll(".tab").forEach((el,i)=>el.classList.toggle("active",["card","quiz","list"][i]===t));
+  document.getElementById("card-mode").style.display=t==="card"?"block":"none";
+  document.getElementById("quiz-mode").style.display=t==="quiz"?"block":"none";
+  document.getElementById("list-mode").style.display=t==="list"?"block":"none";
+  if(t==="quiz")startQuiz();
+  if(t==="list")renderList();
+  render();
+}
+function flipCard(){
+  flipped=!flipped;
+  document.getElementById("main-card").classList.toggle("flipped",flipped);
+}
+function renderCard(){
+  const list=getFiltered();
+  if(!list.length)return;
+  if(currentIdx>=list.length)currentIdx=0;
+  const t=list[currentIdx];
+  document.getElementById("c-cat").textContent=t.cat;
+  document.getElementById("c-term").textContent=t.term;
+  document.getElementById("c-full").textContent=t.full||"";
+  document.getElementById("cb-cat").textContent=t.cat;
+  document.getElementById("c-def").textContent=t.def;
+  document.getElementById("c-ex").textContent=t.example?"📌 "+t.example:"";
+  document.getElementById("c-ex").style.display=t.example?"block":"none";
+  document.getElementById("nav-info").textContent=`${currentIdx+1} / ${list.length}`;
+  document.getElementById("prev-btn").disabled=currentIdx===0;
+  document.getElementById("next-btn").disabled=currentIdx===list.length-1;
+  updateStats();
+}
+function updateStats(){
+  const prog=Object.keys(mastered).filter(k=>mastered[k]).length/TERMS.length*100;
+  document.getElementById("prog-fill").style.width=prog+"%";
+  document.getElementById("total-count").textContent=TERMS.length;
+  document.getElementById("mastered-count").textContent=Object.keys(mastered).filter(k=>mastered[k]).length;
+}
+function prevCard(){if(currentIdx>0){currentIdx--;flipped=false;document.getElementById("main-card").classList.remove("flipped");renderCard();}}
+function nextCard(){const list=getFiltered();if(currentIdx<list.length-1){currentIdx++;flipped=false;document.getElementById("main-card").classList.remove("flipped");renderCard();}}
+function markCard(know){
+  const list=getFiltered();
+  mastered[list[currentIdx].term]=know;
+  saveMastered();
+  if(currentIdx<list.length-1){nextCard();}else{renderCard();}
+}
+function shuffle(arr){return[...arr].sort(()=>Math.random()-.5);}
+function startQuiz(){
+  const list=getFiltered();
+  if(list.length<4){document.getElementById("quiz-content").innerHTML='<div class="empty">至少需要4个术语才能测验，请选择更大的分类</div>';return;}
+  quizState={questions:shuffle(list),idx:0,score:0,answered:false};
+  renderQuiz();
+}
+function renderQuiz(){
+  const{questions,idx,score}=quizState;
+  if(idx>=questions.length){
+    const pct=Math.round(score/questions.length*100);
+    document.getElementById("quiz-content").innerHTML=`<div class="quiz-score"><div class="quiz-score-num">${score}/${questions.length}</div><div class="quiz-score-label">答对题数（正确率 ${pct}%）</div><div class="quiz-score-sub" style="margin-top:1.5rem"><button class="quiz-next" onclick="startQuiz()">再来一次</button></div></div>`;
+    return;
+  }
+  const q=questions[idx];
+  const others=shuffle(TERMS.filter(t=>t.term!==q.term)).slice(0,3);
+  const opts=shuffle([q,...others]);
+  document.getElementById("quiz-content").innerHTML=`
+    <div class="quiz-q">「${q.def}」<br><br>这个术语是？</div>
+    <div class="quiz-opts">${opts.map(o=>`<button class="quiz-opt" onclick="answerQuiz('${o.term}','${q.term}')">${o.term}${o.full?` <span style="font-size:12px;color:#aaa">· ${o.full}</span>`:""}</button>`).join("")}</div>
+    <div class="quiz-meta">${idx+1} / ${questions.length} &nbsp;·&nbsp; 当前得分 ${score}</div>`;
+}
+function answerQuiz(chosen,correct){
+  if(quizState.answered)return;
+  quizState.answered=true;
+  document.querySelectorAll(".quiz-opt").forEach(btn=>{
+    btn.disabled=true;
+    const t=btn.textContent.trim().split(/\s/)[0];
+    if(t===correct)btn.classList.add("correct");
+    else if(t===chosen&&chosen!==correct)btn.classList.add("wrong");
+  });
+  if(chosen===correct)quizState.score++;
+  const next=document.createElement("button");
+  next.className="quiz-next";
+  next.textContent=quizState.idx+1>=quizState.questions.length?"查看结果":"下一题";
+  next.onclick=()=>{quizState.idx++;quizState.answered=false;renderQuiz();};
+  document.querySelector(".quiz-opts").after(next);
+}
+function renderList(){
+  const kw=(document.getElementById("list-search")?.value||"").toLowerCase();
+  const list=getFiltered().filter(t=>!kw||t.term.toLowerCase().includes(kw)||t.def.toLowerCase().includes(kw)||(t.full||"").toLowerCase().includes(kw));
+  document.getElementById("list-wrap").innerHTML=list.length?list.map(t=>`
+    <div class="list-item${mastered[t.term]?" mastered":""}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px">
+        <div class="list-term">${t.term}${t.full?` <span class="list-full">${t.full}</span>`:""}</div>
+        ${mastered[t.term]?'<span class="list-badge">已掌握</span>':""}
+      </div>
+      <div class="list-def">${t.def}</div>
+      <div class="list-cat">${t.cat}</div>
+    </div>`).join(""):'<div class="empty" style="grid-column:1/-1">未找到相关术语</div>';
+}
+function resetProgress(){if(confirm("确定要重置所有学习进度吗？")){mastered={};saveMastered();render();}}
+function render(){if(mode==="card")renderCard();if(mode==="list")renderList();updateStats();}
+initCatFilter();renderCard();
+</script>
+</body>
+</html>
